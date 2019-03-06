@@ -20,15 +20,15 @@ Example: pip install numpy
 Run programs in the repository folder using:
 ```
 For single agent Q-Learning program:
-**python qlearning_main.py**
+python qlearning_main.py
 
 For multiple agent Q-Learning program:
-**python async_qlearning_main.py**
+python async_qlearning_main.py
 ```
 
 Unit tests:
 Run from the repository folder using:
 ```
-**python -m tests.<test_file_name>**
-Example: **python -m tests.test_gridworld**
+python -m tests.<test_file_name>
+Example: python -m tests.test_gridworld
 ```
