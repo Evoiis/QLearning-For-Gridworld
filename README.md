@@ -28,6 +28,7 @@ python async_qlearning_main.py
 ```
 
 Unit tests:
+
 Run from the repository folder using:
 ```
 python -m tests.<test_file_name>
