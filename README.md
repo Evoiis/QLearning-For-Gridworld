@@ -3,7 +3,9 @@ Two programs to solve Gridworld using Q-learning, a reinforcement learning algor
 
 qlearning_main.py uses one agent to generate a q_table to reach the goal.
 
-async_qlearning_main.py uses multiprocessing to run many agents simultaneously to generate a shared q_table.
+async_qlearning_main.py uses multiprocessing to run many agents simultaneously to generate a shared q_table used by each agent to reach the goal.
+
+On completion, graphs are generated to show the rate of learning.
 
 ### Installation
 * Download the repository.
