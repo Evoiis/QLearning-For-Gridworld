@@ -34,12 +34,14 @@ class Plot:
         red_patch = patches.Patch(color='red', label='Obstacle Shift')
         blue_patch = patches.Patch(color='blue', label='Q_Learning after obstacle shift')
 
+        # Add patches to plot legend
         plt.legend(handles=[red_patch, black_patch, blue_patch])
 
         # Show plot
         plt.show()
 
 
+# Plots 3 lines on a graph + a vertical line to indicate obstacle shift
 def async_plot(first, second, third):
     len_first = len(first)
     len_second = len(second)
@@ -66,6 +68,7 @@ def async_plot(first, second, third):
     green_patch = patches.Patch(color='green', label=str(constants.THIRD_ASYNC_NUM_PROCESSES) + ' Processes')
     red_patch = patches.Patch(color='red', label='Obstacle Shift')
 
+    # Add patches to plot legend
     plt.legend(handles=[red_patch, black_patch, blue_patch, green_patch])
 
     plt.show()

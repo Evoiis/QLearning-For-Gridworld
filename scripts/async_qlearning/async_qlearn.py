@@ -13,9 +13,17 @@ def init_async_q_learning(num_processes):
     q_table_lock = Lock()
     plot_data_lock = Lock()
 
-    # Initialize shared arrays
+    # One dimensional array with each block of 4 indexes corresponding to a state's actions
+    # Ex: Indexes 0 to 3 are the q values for state = 0 actions = 0 to 3
     q_table = numpy.zeros(shape=(constants.NUM_STATES * constants.NUM_ACTIONS), dtype=float)
+
+    # Even indexes are the sum of all episodic total rewards
+    # Odd indexes are the number of processes that reached the previous index's episode
+    #   Example: Index 0 = sum of all episodic total rewards for episode 0,
+    #               Index 1 = number of processes that finished episode 0
     plot_data = numpy.zeros(shape=(2 * (max_steps + 1)), dtype=float)
+
+    # Initialize shared arrays
     shared_q_table = Array('f', q_table)
     shared_plot_data = Array('f', plot_data)
     shared_counter = Value('i', 0)
@@ -25,9 +33,11 @@ def init_async_q_learning(num_processes):
 
     print "Starting processes"
 
+    # Start all processes
     for process_id in range(num_processes):
         gw = gridworld.GridWorld()
 
+        # Pass shared arrays, locks, max_steps, and Gridworld object into each process
         new_process = Process(target=async_q_learning, args=(shared_q_table, shared_plot_data, shared_counter, q_table_lock, plot_data_lock, counter_lock, max_steps, gw))
         new_process.start()
         assert new_process.is_alive(), "Process " + str(process_id) + " Failed to start"
@@ -41,6 +51,7 @@ def init_async_q_learning(num_processes):
 
     print "Processes finished"
 
+    # Filter plot data to avg_total_reward
     filter_array(num_processes, 2 * max_steps, shared_plot_data, avg_total_reward)
 
     return avg_total_reward
@@ -63,7 +74,7 @@ def async_q_learning(shared_q_table, shared_plot_data, shared_counter, q_table_l
         if random < constants.ASYNC_EPSILON:
             action = numpy.random.randint(constants.NUM_ACTIONS)
         else:
-            # Get action with max Q
+            # Get action with max q
             action = state*4
             for i in range(1, 4):
                 other_action = state*4 + i

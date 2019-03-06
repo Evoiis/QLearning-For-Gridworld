@@ -20,8 +20,11 @@ def q_learning(gridworld, plot):
             reward, new_state = gridworld.move_player(action, state)
             total_steps += 1
 
+            # Decrease epsilon at each step
             if epsilon >= 10.2:
                 epsilon -= 0.2
+
+            # Shift obstacle and reset epsilon to 100 after 1000 steps have been taken
             if total_steps == 1000:
                 epsilon = 100
                 total_reward = 0
@@ -40,6 +43,7 @@ def q_learning(gridworld, plot):
     plot.generate_plot()
 
 
+# Choose action using epsilon greedy policy
 def choose_action(q_table, epsilon, state):
     random = numpy.random.randint(0, 101)
     if random < epsilon:
