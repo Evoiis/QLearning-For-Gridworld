@@ -15,8 +15,8 @@ Install:
 * Packages: numpy, matplotlib
 ```
 Packages can be installed by using pip:
-pip install <package_name>
-Example: pip install numpy
+pip install matplotlib
+pip install numpy
 ```
 
 ### Execution
